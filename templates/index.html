@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Flasky{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Hello, {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h1>
+    {% if email %}
+        <p>Your UofT Email is: {{ email }}</p>
+    {% else %}
+        <p>Your UofT Email is not recognized.</p>
+    {% endif %}
+    
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% if current_time %}
+        <p>The local date and time is {{ moment(current_time).format('LLLL') }}.</p>
+    {% endif %}
+</div>
+
+{{ wtf.quick_form(form) }}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{% endblock %}
